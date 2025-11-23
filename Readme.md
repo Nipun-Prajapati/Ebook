@@ -80,6 +80,12 @@ npm i mongoose
 npm i -D @types/mongoose
 ``` 
 
+### 13. Setup Global error handling
+```
+npm i http-errors
+npm i -D @types/http-errors
+```
+
 
 
 
