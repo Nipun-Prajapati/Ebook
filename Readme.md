@@ -40,6 +40,12 @@ git init
 
 ### 7. Add a gitignore
 
+### 8. Setup Eslint
+```
+npm init @eslint/config
+```
+
+
 
 
 
