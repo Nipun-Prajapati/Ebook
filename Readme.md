@@ -66,6 +66,20 @@ npm i express
 npm i -D @types/express
 ```
 
+### 11. Install a dotenv
+```
+npm i dotenv
+
+npm i -D @types/dotenv
+```
+
+### 12. Setup MongoDB with Mongoose
+```
+npm i mongoose
+
+npm i -D @types/mongoose
+``` 
+
 
 
 
