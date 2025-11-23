@@ -2,14 +2,16 @@
   "name": "api",
   "version": "1.0.0",
   "description": "This is ebook api project.",
-  "main": "index.js",
+  "main": "Server.ts",
+  "type": "module",
   "scripts": {
-    "start": "nodemon server.ts"
+    "start": "nodemon Server.ts"
   },
   "author": "Nipun Prajapati",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@types/express": "^5.0.5",
     "@types/node": "^24.10.1",
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
@@ -17,5 +19,8 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.47.0"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
   }
 }

@@ -43,7 +43,32 @@ git init
 ### 8. Setup Eslint
 ```
 npm init @eslint/config
+
+// It is used for node best practice.
+// give a error 
 ```
+
+### 9. Setup Prettier
+
+* create a .prettierrc.json file.
+* Add a configuration.
+```
+{
+    "tabWidth": 2,
+    "semi": true
+}
+```
+
+### 10. Setup Express server.
+```
+npm i express
+
+npm i -D @types/express
+```
+
+
+
+
 
 
 
