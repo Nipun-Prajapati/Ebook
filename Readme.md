@@ -1,4 +1,4 @@
-# Project  Setup
+# Project  Setup [Learning Purpose]
 
 ### 1. Make a empty folder
 ```

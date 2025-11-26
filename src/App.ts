@@ -1,8 +1,11 @@
 import express from "express";
 import globalErrorHandler from "./middleware/globalErrorHandle.ts";
 import createHttpError from "http-errors";
+import userRouter from "./user/userRouter.ts";
 
 const app = express();
+
+app.use(express.json());
 
 // Routes
 
@@ -12,6 +15,8 @@ app.get("/", (req, res, next) => {
 
 // Global error handler
 // put at the end
+ 
+app.use("/api/users",userRouter)
 
 app.use(globalErrorHandler);
 
