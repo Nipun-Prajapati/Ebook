@@ -3,6 +3,7 @@ import {createUser} from "./userController.ts"
 
 const userRouter = express.Router();
 
+// routes
 userRouter.post("/register", createUser)
 
 

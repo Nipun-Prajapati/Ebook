@@ -86,6 +86,10 @@ npm i http-errors
 npm i -D @types/http-errors
 ```
 
+### Usefull Information
+- If you make a project from scratch than add a simple logic in it like in auth we add a 
+one logic in it.
+- When entire project build than we add a more logic in it.
 
 
 
