@@ -10,3 +10,14 @@ Content-Type: application/json
     "email" : "pooja@gmail.com",
     "password" : "pooja1234"
 }
+
+###
+
+POST  http://localhost:7000/api/users/register HTTP/1.1 
+Content-Type: application/json
+
+{
+    "name" : "Mahesh babu",
+    "email" : "mahesh@gmail.com",
+    "password" : "mahesh1234"
+}
