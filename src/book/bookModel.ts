@@ -10,7 +10,7 @@ const bookSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         required : true
     },
-    converImage : {
+    coverImage : {
         type : String,
         required : true
     },
