@@ -1,6 +1,6 @@
 import app from "./src/App.ts";
 import dotenv from "dotenv/config";
-import mongoDB_Connection from "./src/Database.ts";
+import mongoDB_Connection from "./src/config/Database.ts";
 
 const startServer = async () => {
   const port = process.env.PORT || 5000;
