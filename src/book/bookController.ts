@@ -4,7 +4,10 @@ import path from "node:path";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import createHttpError from "http-errors";
+import Book from "./bookModel.ts";
+import fs from "node:fs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
 // files{coverImage :{[]},files : {[]}}
 // Define file type for Multer
 
@@ -22,6 +25,8 @@ export const createBook = async (
   next: NextFunction
 ) => {
   try {
+    const { title, genre } = req.body;
+
     const coverFile = req.files?.coverImage?.[0];
     // file type
     const imagefileExt = coverFile?.mimetype.split("/").at(-1);
@@ -36,15 +41,9 @@ export const createBook = async (
     const uploadResult = await cloudinary.uploader.upload(filePath, {
       filename_override: fileName as string,
       folder: "book-covers",
-      format: imagefileExt,
+      format: imagefileExt as string,
     });
-    console.log("Cloudinary Upload Result:", uploadResult);
-    res.json({ message: "Book Image created successfully" });
-  } catch (error) {
-    next(error);
-  }
 
-  try {
     const bookFile = req.files?.file?.[0];
     const bookFileName = bookFile?.filename;
     const bookFilepath = path.resolve(
@@ -59,9 +58,24 @@ export const createBook = async (
       folder: "book-pdfs",
       format: "pdf",
     });
+
+    console.log("Image :", uploadResult);
     console.log("pdf :", fileUploadResult);
-    res.json({ message: "Book File created successfully" });
+
+    const newBook = await Book.create({
+      title,
+      author: "6927f8dc13f77d0e66f83a4f",
+      coverImage: uploadResult.secure_url,
+      file: fileUploadResult.secure_url,
+      genre,
+    });
+
+    await fs.promises.unlink(filePath);
+    await fs.promises.unlink(bookFilepath)
+
+    return res.json({id : newBook._id });
   } catch (error) {
-     next(error);
+    console.log(error);
+    return next(createHttpError(500, "Error while uploading a file."));
   }
 };
