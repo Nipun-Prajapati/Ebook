@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import createHttpError from "http-errors";
 import Book from "./bookModel.ts";
 import fs from "node:fs";
+import type { authRequest } from "../middleware/authenticate.ts";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // files{coverImage :{[]},files : {[]}}
@@ -26,7 +27,6 @@ export const createBook = async (
 ) => {
   try {
     const { title, genre } = req.body;
-    console.log("userId :",req.userId);
     
     const coverFile = req.files?.coverImage?.[0];
     // file type
@@ -60,12 +60,12 @@ export const createBook = async (
       format: "pdf",
     });
 
-    console.log("Image :", uploadResult);
-    console.log("pdf :", fileUploadResult);
+
+    const _req = req as authRequest
 
     const newBook = await Book.create({
       title,
-      author: "6927f8dc13f77d0e66f83a4f",
+      author: _req.userId,
       coverImage: uploadResult.secure_url,
       file: fileUploadResult.secure_url,
       genre,
