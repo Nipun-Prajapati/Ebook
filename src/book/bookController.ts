@@ -26,7 +26,8 @@ export const createBook = async (
 ) => {
   try {
     const { title, genre } = req.body;
-
+    console.log("userId :",req.userId);
+    
     const coverFile = req.files?.coverImage?.[0];
     // file type
     const imagefileExt = coverFile?.mimetype.split("/").at(-1);
