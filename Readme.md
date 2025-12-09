@@ -91,6 +91,34 @@ npm i -D @types/http-errors
 one logic in it.
 - When entire project build than we add a more logic in it.
 
+- console.log("files:",req.files); => files: [Object: null prototype] {
+  coverImage: [
+    {
+      fieldname: 'coverImage',
+      originalname: 'pexels-pixabay-460775.jpg',
+      encoding: '7bit',
+      mimetype: 'image/jpeg',
+      destination: '/home/nipun-prajapati/Desktop/API/public/uploads',
+      filename: '283c1101c6313a6967c5fca6a80c40bb',
+      path: '/home/nipun-prajapati/Desktop/API/public/uploads/283c1101c6313a6967c5fca6a80c40bb',
+      size: 291595
+    }
+  ],
+  file: [
+    {
+      fieldname: 'file',
+      originalname: 'Project Documentation Format.pdf',
+      encoding: '7bit',
+      mimetype: 'application/pdf',
+      destination: '/home/nipun-prajapati/Desktop/API/public/uploads',
+      filename: 'f692b52a8b3d05bda8574401e31808d8',
+      path: '/home/nipun-prajapati/Desktop/API/public/uploads/f692b52a8b3d05bda8574401e31808d8',
+      size: 1998457
+    }
+  ]
+}
+
+
 
 
 

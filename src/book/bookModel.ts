@@ -8,10 +8,10 @@ const bookSchema = new mongoose.Schema(
       required: true,
     },
     author: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,  
       required: true,
     },
-    coverImage: {
+    coverImage: { 
       type: String,
       required: true,
     },

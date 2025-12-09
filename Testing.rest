@@ -1,43 +1,9 @@
-GET http://localhost:7000/
-
-###
-
-POST  http://localhost:7000/api/users/register HTTP/1.1 
+POST http://localhost:7000/api/users/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "name" : "Pooja Hegde",
-    "email" : "pooja@gmail.com",
-    "password" : "pooja1234"
+   "name" : "Tony Stark",
+   "email" : "romiyo@gmail.com",
+   "password" : "romiyo@123"
 }
 
-###
-
-POST  http://localhost:7000/api/users/register HTTP/1.1 
-Content-Type: application/json
-
-{
-    "name" : "Mahesh babu",
-    "email" : "mahesh@gmail.com",
-    "password" : "mahesh1234"
-}
-
-###
-
-POST  http://localhost:7000/api/users/login HTTP/1.1 
-Content-Type: application/json
-
-{
-    "email" : "pooja@gmail.com",
-    "password" : "pooja1234"
-}
-
-###
-
-POST  http://localhost:7000/api/users/login HTTP/1.1 
-Content-Type: multipart/form-data
-
-{
-    coverImage : <images/pexels-pixabay-460775.jpg>
-    file : <images/Project Documentation Format.pdf>
-}

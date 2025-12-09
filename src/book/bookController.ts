@@ -1,82 +1,73 @@
-import { type NextFunction, type Response, type Request } from "express";
-import cloudinary from "../config/Cloudinary.ts";
+import type { Request, Response, NextFunction } from "express";
 import path from "node:path";
-import { dirname } from "node:path";
+import cloudinary from "../config/Cloudinary.ts";
 import { fileURLToPath } from "node:url";
 import createHttpError from "http-errors";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import Book from "./bookModel.ts";
 import fs from "node:fs";
-import type { authRequest } from "../middleware/authenticate.ts";
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// files{coverImage :{[]},files : {[]}}
-// Define file type for Multer
-
-interface MulterRequest extends Request {
-  //Allows req.files to be correctly typed when using Multe
-  files?: {
-    [fieldname: string]: Express.Multer.File[];
-  };
-  // give a type
-}
-
-export const createBook = async (
-  req: MulterRequest,
-  res: Response,
-  next: NextFunction
-) => {
+const createBook = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { title, genre } = req.body;
-    
-    const coverFile = req.files?.coverImage?.[0];
-    // file type
-    const imagefileExt = coverFile?.mimetype.split("/").at(-1);
-    const fileName = coverFile?.filename; // multer generates filename
-    const filePath = path.resolve(
+    // This is for Image.
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+    const coverImageMimeType = files.coverImage?.[0]?.mimetype
+      .split("/")
+      .at(-1);
+    const coverFileName = files.coverImage?.[0]?.filename;
+    const coverFilePath = path.resolve(
       __dirname,
       "../../public/uploads",
-      fileName as string
+      coverFileName as string
     );
 
-    // Upload to Cloudinary
-    const uploadResult = await cloudinary.uploader.upload(filePath, {
-      filename_override: fileName as string,
-      folder: "book-covers",
-      format: imagefileExt as string,
-    });
+    const bookCoverUploadResult = await cloudinary.uploader.upload(
+      coverFilePath,
+      {
+        filename_override: coverFileName as string,
+        folder: "book-covers",
+        format: coverImageMimeType as string,
+      }
+    );
 
-    const bookFile = req.files?.file?.[0];
-    const bookFileName = bookFile?.filename;
-    const bookFilepath = path.resolve(
+    // This is for PDF.
+    const bookFileName = files.file?.[0]?.filename;
+    const bookFilePath = path.resolve(
       __dirname,
       "../../public/uploads",
       bookFileName as string
     );
 
-    const fileUploadResult = await cloudinary.uploader.upload(bookFilepath, {
-      resource_type: "raw",
-      filename_override: bookFileName as string,
-      folder: "book-pdfs",
-      format: "pdf",
-    });
+    const bookFileUploadResult = await cloudinary.uploader.upload(
+      bookFilePath,
+      {
+        resource_type: "raw",
+        filename_override: bookFileName as string,
+        folder: "book-pdfs",
+        format: "pdf",
+      }
+    );
 
-
-    const _req = req as authRequest
-
+    //Sotre a book data in database.
     const newBook = await Book.create({
       title,
-      author: _req.userId,
-      coverImage: uploadResult.secure_url,
-      file: fileUploadResult.secure_url,
       genre,
+      author: "6938109154c9647970c40a0d0",
+      coverImage: bookCoverUploadResult.secure_url,
+      file: bookFileUploadResult.secure_url,
     });
 
-    await fs.promises.unlink(filePath);
-    await fs.promises.unlink(bookFilepath)
+    //Delete a temporary files from upload folder.
+    await fs.promises.unlink(coverFilePath);
+    await fs.promises.unlink(bookFilePath);
 
-    return res.json({id : newBook._id });
+    res.json({ id : newBook._id });
   } catch (error) {
     console.log(error);
-    return next(createHttpError(500, "Error while uploading a file."));
+    return next(createHttpError(500, "Error while uploading a book."));
   }
 };
+
+export { createBook };
