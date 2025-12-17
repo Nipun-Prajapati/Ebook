@@ -22,7 +22,6 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
       parseToken as string,
       process.env.JWT_SECRET as string
     );
-    console.log("decoded :", decoded);
 
     const _req = req as authRequest;
 
